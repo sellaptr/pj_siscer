@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:8111
--- Generation Time: Nov 20, 2022 at 03:41 PM
+-- Generation Time: Dec 01, 2022 at 07:32 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.15
 
@@ -42,10 +42,19 @@ CREATE TABLE `dosen` (
 --
 
 CREATE TABLE `login` (
-  `nama` varchar(255) NOT NULL,
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` int(11) NOT NULL
+  `level` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `login`
+--
+
+INSERT INTO `login` (`id`, `username`, `password`, `level`) VALUES
+(1, 'dosen@dsn', '$2y$10$On1o68AKc1rzFW7D8vlny.grxf6QsJWVNMOY31qmHCbNVT77E9u3i', 'dosen'),
+(2, 'mahasiswa@mhs', '$2y$10$q4JYJd/UopIfpChilHVL/OEGiJZkJUojOBh.vP.rr40J2VYF/Erf6', 'mahasiswa');
 
 -- --------------------------------------------------------
 
@@ -98,6 +107,12 @@ CREATE TABLE `nilai` (
 ALTER TABLE `dosen`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_matkul` (`id_matkul`);
+
+--
+-- Indexes for table `login`
+--
+ALTER TABLE `login`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `mahasiswa`
