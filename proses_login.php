@@ -11,14 +11,14 @@ if ($cek > 0){
 
     if($data['level']=="dosen"){
         $_SESSION['username']=$username;
-        $_SESSION['password']="password";
+        $_SESSION['password']="$password";
         $_SESSION['level']="level";
 
         header("location:dosen.php");
 
     }else if ($data['level']=="mahasiswa"){
         $_SESSION['username']=$username;
-        $_SESSION['password']="password";
+        $_SESSION['password']="$password";
         $_SESSION['level']="level";
 
         header("location:mahasiswa.php");
@@ -27,4 +27,3 @@ if ($cek > 0){
        header("location:login.php");
     }
 }
-?>

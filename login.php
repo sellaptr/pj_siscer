@@ -39,6 +39,7 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Selamat Datang</h1>
                                     </div>
+
                                     <form method="POST" action="proses_login.php">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
@@ -57,6 +58,7 @@
                                         </a>
                                         <hr>
                                     </form>
+
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="#">Belum Punya Akun?</a>
