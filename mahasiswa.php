@@ -1,3 +1,34 @@
+<?php
+session_start();
+// Jika bisa login maka ke index.php
+if (isset($_SESSION['login'])) {
+    header('location:mahasiswa.php');
+    exit;
+}
+
+// jika tombol yang bernama login diklik
+if (isset($_POST['login'])) {
+    $username = $_POST['username'];
+    $password = md5($_POST['password']);
+    // password menggunakan md5
+
+    // mengambil data dari user dimana username yg diambil
+    $result = mysqli_query($con, "SELECT * FROM user WHERE username = '$username'");
+
+    $cek = mysqli_num_rows($result);
+
+    // jika $cek lebih dari 0, maka berhasil login dan masuk ke index.php
+    if ($cek > 1) {
+        $_SESSION['login'] = true;
+
+        header('location:mahasiswa.php');
+        exit;
+    }
+    // jika $cek adalah 0 maka tampilkan error
+    $error = true;  
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 

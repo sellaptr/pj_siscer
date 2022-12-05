@@ -1,29 +1,38 @@
-<?php
+<?php 
+// berfungsi mengaktifkan session
 session_start();
+ 
+// berfungsi menghubungkan koneksi ke database
 include 'koneksi.php';
-$username = $_POST['username'];
-$password = $_POST['password'];
+ 
+// berfungsi menangkap data yang dikirim
+$user = $_POST['username'];
+$password =$_POST['password'];
+// berfungsi menyeleksi data user dengan username dan password yang sesuai
+$sql = mysqli_query($con,"SELECT * FROM user WHERE username='$user' AND password='$password'");
+//berfungsi menghitung jumlah data yang ditemukan
+$cek = mysqli_num_rows($sql);
 
-$login = mysqli_query($con, "SELECT * FROM login WHERE username='$username' AND password = '$password'");
-$cek = mysqli_num_rows($login);
-if ($cek > 0){
-    $data = mysqli_fetch_assoc($result);
+// berfungsi mengecek apakah username dan password ada pada database
 
-    if($data['level']=="dosen"){
-        $_SESSION['username']=$username;
-        $_SESSION['password']="$password";
-        $_SESSION['level']="level";
+if($cek > 0){
+	$data = mysqli_fetch_array($sql);
 
-        header("location:dosen.php");
+	// berfungsi mengecek jika user login sebagai admin
+	if($data['level']=="dosen"){
+		// berfungsi membuat session
+		$_SESSION['username'] =  $data['username'];
+		$_SESSION['level'] = "dosen";
+		//berfungsi mengalihkan ke halaman admin
+		header("Location:dosen.php");
+	// berfungsi mengecek jika user login sebagai moderator
 
-    }else if ($data['level']=="mahasiswa"){
-        $_SESSION['username']=$username;
-        $_SESSION['password']="$password";
-        $_SESSION['level']="level";
-
-        header("location:mahasiswa.php");
-
-    }else{
-       header("location:login.php");
+	}else if($data['level']=="mahasiswa"){
+		// berfungsi membuat session
+		$_SESSION['username'] = $data['username'];
+		$_SESSION['level'] = "mahasiswa";
+		// berfungsi mengalihkan ke halaman moderator
+		header("Location:mahasiswa.php");
     }
 }
+?>

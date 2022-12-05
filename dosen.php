@@ -1,3 +1,35 @@
+<?php
+session_start();
+// Jika bisa login maka ke index.php
+if (isset($_SESSION['login'])) {
+    header('location:dosen.php');
+    exit;
+}
+
+// jika tombol yang bernama login diklik
+if (isset($_POST['login'])) {
+    $username = $_POST['username'];
+    $password = md5($_POST['password']);
+    // password menggunakan md5
+
+    // mengambil data dari user dimana username yg diambil
+    $result = mysqli_query($con, "SELECT * FROM user WHERE username = '$username'");
+
+    $cek = mysqli_num_rows($result);
+
+    // jika $cek lebih dari 0, maka berhasil login dan masuk ke index.php
+    if ($cek > 0) {
+        $_SESSION['login'] = true;
+
+        header('location:dosen.php');
+        exit;
+    }
+    // jika $cek adalah 0 maka tampilkan error
+    $error = true;  
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,7 +67,6 @@
                 </div>
                 <div class="sidebar-brand-text mx-3">SI <sup>Nilai</sup></div>
             </a>
-
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
@@ -145,7 +176,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>

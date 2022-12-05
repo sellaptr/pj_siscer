@@ -39,13 +39,23 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Selamat Datang</h1>
                                     </div>
-
+                                    <?php
+                                    if (isset($_GET['alert'])) {
+                                        if ($_GET['alert'] == "gagal") {
+                                            echo "<p>Maaf! Username & Password Salah.</p>";
+                                        } else if ($_GET['alert'] == "belum_login") {
+                                            echo "<p>Anda Harus Login Terlebih Dulu!</p>";
+                                        } else if ($_GET['alert'] == "logout") {
+                                            echo "<p>Anda Telah Logout!</p>";
+                                        }
+                                    }
+                                    ?>
                                     <form method="POST" action="proses_login.php">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                                            <input type="username" name="username" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                                            <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -54,7 +64,7 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <input type="submit" class="btn btn-primary btn-user btn-block" href="index.php">
+                                        <input type="submit" class="btn btn-primary btn-user btn-block" value="LOGIN">
                                         </a>
                                         <hr>
                                     </form>

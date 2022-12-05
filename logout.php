@@ -1,9 +1,10 @@
-<?php
+<?php 
+// mengaktifkan session php
 session_start();
-$_SESSION = [];
-session_unset();
+ 
+// menghapus semua session
 session_destroy();
-// Session dihapus dan logout
-
-header('location: index.php');
-    // kembali ke index.php
+ 
+// mengalihkan halaman ke halaman login
+header("location:login.php");
+?>

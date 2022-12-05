@@ -2,8 +2,8 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:8111
--- Generation Time: Dec 01, 2022 at 07:32 PM
+-- Host: 127.0.0.1
+-- Generation Time: Dec 05, 2022 at 04:01 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.15
 
@@ -34,27 +34,6 @@ CREATE TABLE `dosen` (
   `alamat` varchar(255) NOT NULL,
   `id_matkul` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `login`
---
-
-CREATE TABLE `login` (
-  `id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `level` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `login`
---
-
-INSERT INTO `login` (`id`, `username`, `password`, `level`) VALUES
-(1, 'dosen@dsn', '$2y$10$On1o68AKc1rzFW7D8vlny.grxf6QsJWVNMOY31qmHCbNVT77E9u3i', 'dosen'),
-(2, 'mahasiswa@mhs', '$2y$10$q4JYJd/UopIfpChilHVL/OEGiJZkJUojOBh.vP.rr40J2VYF/Erf6', 'mahasiswa');
 
 -- --------------------------------------------------------
 
@@ -97,6 +76,27 @@ CREATE TABLE `nilai` (
   `nilai_rata` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `level` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`, `level`) VALUES
+(1, 'dosen@dsn', 'dosen123', 'dosen'),
+(2, 'mahasiswa@mhs', 'mahasiswa123', 'mahasiswa');
+
 --
 -- Indexes for dumped tables
 --
@@ -107,12 +107,6 @@ CREATE TABLE `nilai` (
 ALTER TABLE `dosen`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_matkul` (`id_matkul`);
-
---
--- Indexes for table `login`
---
-ALTER TABLE `login`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `mahasiswa`
@@ -133,6 +127,12 @@ ALTER TABLE `matakuliah`
 ALTER TABLE `nilai`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_matkul` (`id_matkul`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
