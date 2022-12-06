@@ -9,7 +9,7 @@ include 'koneksi.php';
 $user = $_POST['username'];
 $password =$_POST['password'];
 // berfungsi menyeleksi data user dengan username dan password yang sesuai
-$sql = mysqli_query($con,"SELECT * FROM user WHERE username='$user' AND password='$password'");
+$sql = mysqli_query($conn,"SELECT * FROM user WHERE username='$user' AND password='$password'");
 //berfungsi menghitung jumlah data yang ditemukan
 $cek = mysqli_num_rows($sql);
 

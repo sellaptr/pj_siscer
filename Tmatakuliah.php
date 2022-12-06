@@ -1,5 +1,19 @@
 <?php
 include "prosesmatakuliah.php";
+
+if ( isset($_POST["submit"])){
+
+    $nama = $_POST["pengampu"];
+    $kodemkl = $_POST["kode_mkl"];
+    $namamkl = $_POST["nama_mkl"];
+
+    $query = "INSERT INTO matakuliah
+    VALUES 
+    ('','$nama','$kodemkl','$namamkl')
+    ";
+mysqli_query($conn,$query);
+ header("location:matakuliah.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -185,63 +199,30 @@ include "prosesmatakuliah.php";
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                <h1 class="h3 mb-4 text-gray-800">Data Matakuliah</h1>
-                <br>
-
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <a href="Tmatakuliah.php">
-                            <button type="button" class="btn btn-primary">Tambah Data</button>
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                        <th>No.</th>
-                                        <th>Nama</th>
-                                        <th>Mata Kuliah</th>
-                                        <th>Kode Kuliah</th>                              
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>Nama</th>
-                                        <th>Mata Kuliah</th>
-                                        <th>Kode Kuliah</th>                                                   
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    <?php $i =1; ?>
-                          
-                          <?php foreach ($matkul as $row ): ?>
-                              <td><?=$i; ?></td>
-                              <td><?= $row["pengampu"]; ?></td>
-                              <td><?= $row["nama_mkl"]; ?></td>
-                              <td><?= $row["kode_mkl"]; ?></td>
-                           
-                              </tr>
-                              <?php $i ++; ?>
-                          <?php endforeach; ?>
-                                      
-                                    </tbody>
-                                </table>
+                <div class="card-header">  
+                        <!-- <h5>Kandang A</h5> -->
+                        <div class="card col-md-7 mx-auto p-5">
+                    <div class="text-center">
+                    <form  class= "user"method="POST" action="" autocomplete="off" enctype="multipart/form-data">
+                                <h1 class="h4 text-gray-900 mb-4">Tambah Data Matakuliah</h1>
                             </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user"  placeholder="Masukkan Nama..." name="pengampu" required >
+                                </div>      
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" placeholder="Masukkan Nama Matakuliah..." name="nama_mkl" required >
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user"  placeholder="Masukkan Kode Matakuliah..." name="kode_mkl"  required >
+                                </div>
+                               
+                                <button type="submit" class="btn btn-primary btn-user btn-block" name="submit">
+                                  Tambah Data
+                                </button>
+                                </div>
+                            </div>
+                            </div>
+                      <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
