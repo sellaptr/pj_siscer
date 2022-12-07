@@ -1,5 +1,8 @@
 <?php
-include "prosesmatakuliah.php";
+include 'koneksi.php';
+$id = $_GET["id"];
+$matkul = query("SELECT * FROM matakuliah WHERE id = $id")[0];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -185,72 +188,31 @@ include "prosesmatakuliah.php";
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                <h1 class="h3 mb-4 text-gray-800">Data Matakuliah</h1>
-                <br>
-
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <a href="Tmatakuliah.php">
-                            <button type="button" class="btn btn-primary">Tambah Data</button>
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                        <th>No.</th>
-                                        <th>Nama</th>
-                                        <th>Mata Kuliah</th>
-                                        <th>Kode Kuliah</th>  
-                                        <th>Aksi</th>                            
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>Nama</th>
-                                        <th>Mata Kuliah</th>
-                                        <th>Kode Kuliah</th>    
-                                        <th>Aksi</th>                                               
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    <?php $i =1; ?>
-                          
-                          <?php foreach ($matkul as $row ): ?>
-                              <td><?=$i; ?></td>
-                              <td><?= $row["pengampu"]; ?></td>
-                              <td><?= $row["nama_mkl"]; ?></td>
-                              <td><?= $row["kode_mkl"]; ?></td>
-                           <td>
-                                <a href="Ematkul.php?id=<?=$row["id"]; ?> " type="button" class="btn btn-primary btn-sm">
-                                         <i class="fas fa-eye"></i>   
-                                        Detail </a>
-                                     <a href="Hmatkul.php?id=<?=$row["id"]; ?>" type="button" class="btn btn-danger btn-sm tombol-hapus"onclick="return confirm('yakin?');">
-                                         <i class="fas fa-trash"></i>   
-                                        Hapus</a>
-                                    </td>
-                              </tr>
-                              <?php $i ++; ?>
-                          <?php endforeach; ?>
-                                      
-                                    </tbody>
-                                </table>
+                <div class="card-header">  
+                        <!-- <h5>Kandang A</h5> -->
+                        <div class="card col-md-7 mx-auto p-5">
+                    <div class="text-center">
+                    <form  class= "user"method="POST" action="" autocomplete="off" enctype="multipart/form-data">
+                                <h1 class="h4 text-gray-900 mb-4">Edit Data Matakuliah</h1>
                             </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
+                            <input type="hidden" name="id" value="<?=$matkul ["id"];?>" >
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user"  placeholder="Masukkan Nama..." name="pengampu" value="<?= $matkul["pengampu"];?>">
+                                </div>      
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" placeholder="Masukkan Nama Matakuliah..." name="nama_mkl" value="<?= $matkul["nama_mkl"];?>">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user"  placeholder="Masukkan Kode Matakuliah..." name="kode_mkl"  value="<?= $matkul["kode_mkl"];?>">
+                                </div>
+                               
+                                <button type="submit" class="btn btn-primary btn-user btn-block" name="update">
+                                  Tambah Data
+                                </button>
+                                </div>
+                            </div>
+                            </div>
+                      <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -311,3 +273,21 @@ include "prosesmatakuliah.php";
 </body>
 
 </html>
+
+<?php
+if (isset($_POST['update'])) {
+	$id = $_POST ["id"];
+	$pengampu = $_POST["pengampu"];
+	$kode_mkl = $_POST["kode_mkl"];
+	$nama_mkl = $_POST["nama_mkl"];	
+	// query insert data
+	mysqli_query($conn, "UPDATE matakuliah SET pengampu = '$pengampu', kode_mkl = '$kode_mkl', nama_mkl = '$nama_mkl' WHERE id = $id");
+
+    echo "
+        <script>
+            document.location = 'matakuliah.php';
+        </script>
+    ";
+}
+
+?>
