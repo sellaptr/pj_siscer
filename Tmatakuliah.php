@@ -1,15 +1,15 @@
 <?php
-include "prosesmatakuliah.php";
+include "koneksi.php";
 
 if ( isset($_POST["submit"])){
 
+  
+    $namamkl = $_POST["nama_mkl"];
     $nama = $_POST["pengampu"];
     $kodemkl = $_POST["kode_mkl"];
-    $namamkl = $_POST["nama_mkl"];
-
     $query = "INSERT INTO matakuliah
     VALUES 
-    ('','$nama','$kodemkl','$namamkl')
+    ('','$nama','$namamkl','$kodemkl')
     ";
 mysqli_query($conn,$query);
  header("location:matakuliah.php");
@@ -207,13 +207,13 @@ mysqli_query($conn,$query);
                                 <h1 class="h4 text-gray-900 mb-4">Tambah Data Matakuliah</h1>
                             </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-user"  placeholder="Masukkan Nama..." name="pengampu" required >
+                                    <input type="text" class="form-control form-control-user"  placeholder="Masukkan Nama Matakuliah..." name="nama_mkl" required >
                                 </div>      
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" placeholder="Masukkan Nama Matakuliah..." name="nama_mkl" required >
+                                    <input type="text" class="form-control form-control-user" placeholder="Masukkan Kode Matakuliah..." name="kode_mkl" required >
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-user"  placeholder="Masukkan Kode Matakuliah..." name="kode_mkl"  required >
+                                    <input type="text" class="form-control form-control-user"  placeholder="Masukkan Dosen Pengampu..." name="pengampu"  required >
                                 </div>
                                
                                 <button type="submit" class="btn btn-primary btn-user btn-block" name="submit">
