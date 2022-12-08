@@ -1,5 +1,12 @@
 <?php
-include "prosesmatakuliah.php";
+// berfungsi mengaktifkan session
+session_start();
+ 
+// berfungsi menghubungkan koneksi ke database
+include 'koneksi.php';
+global $conn;
+$matkul = query("SELECT * FROM matakuliah ");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -203,18 +210,20 @@ include "prosesmatakuliah.php";
                                     <thead>
                                         <tr>
                                         <th>No.</th>
-                                        <th>Nama</th>
+                                      
                                         <th>Mata Kuliah</th>
                                         <th>Kode Kuliah</th>  
+                                        <th>Pengampu</th>
                                         <th>Aksi</th>                            
                                         </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Nama</th>
+                                       
                                         <th>Mata Kuliah</th>
-                                        <th>Kode Kuliah</th>    
+                                        <th>Kode Kuliah</th>  
+                                        <th>Pengampu</th>  
                                         <th>Aksi</th>                                               
                                         </tr>
                                     </tfoot>
@@ -222,10 +231,10 @@ include "prosesmatakuliah.php";
                                     <?php $i =1; ?>
                           
                           <?php foreach ($matkul as $row ): ?>
-                              <td><?=$i; ?></td>
-                              <td><?= $row["pengampu"]; ?></td>
+                              <td><?=$i; ?></td>  
                               <td><?= $row["nama_mkl"]; ?></td>
                               <td><?= $row["kode_mkl"]; ?></td>
+                              <td><?= $row["pengampu"]; ?></td>
                            <td>
                                 <a href="Ematkul.php?id=<?=$row["id"]; ?> " type="button" class="btn btn-primary btn-sm">
                                          <i class="fas fa-eye"></i>   
