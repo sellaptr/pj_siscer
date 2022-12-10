@@ -19,18 +19,18 @@ if($cek > 0){
 	$data = mysqli_fetch_array($sql);
 
 	// berfungsi mengecek jika user login sebagai admin
-	if($data['level']=="dosen"){
+	if($data['level']=="Dosen"){
 		// berfungsi membuat session
 		$_SESSION['username'] =  $data['username'];
-		$_SESSION['level'] = "dosen";
+		$_SESSION['level'] = "Dosen";
 		//berfungsi mengalihkan ke halaman admin
 		header("Location:dosen.php");
 	// berfungsi mengecek jika user login sebagai moderator
 
-	}else if($data['level']=="mahasiswa"){
+	}else if($data['level']=="Mahasiswa"){
 		// berfungsi membuat session
 		$_SESSION['username'] = $data['username'];
-		$_SESSION['level'] = "mahasiswa";
+		$_SESSION['level'] = "Mahasiswa";
 		// berfungsi mengalihkan ke halaman moderator
 		header("Location:mahasiswa.php");
     }

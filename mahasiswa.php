@@ -1,32 +1,11 @@
 <?php
+// berfungsi mengaktifkan session
 session_start();
-// Jika bisa login maka ke index.php
-if (isset($_SESSION['login'])) {
-    header('location:mahasiswa.php');
-    exit;
-}
-
-// jika tombol yang bernama login diklik
-if (isset($_POST['login'])) {
-    $username = $_POST['username'];
-    $password = md5($_POST['password']);
-    // password menggunakan md5
-
-    // mengambil data dari user dimana username yg diambil
-    $result = mysqli_query($con, "SELECT * FROM user WHERE username = '$username'");
-
-    $cek = mysqli_num_rows($result);
-
-    // jika $cek lebih dari 0, maka berhasil login dan masuk ke index.php
-    if ($cek > 1) {
-        $_SESSION['login'] = true;
-
-        header('location:mahasiswa.php');
-        exit;
-    }
-    // jika $cek adalah 0 maka tampilkan error
-    $error = true;  
-}
+ 
+// berfungsi menghubungkan koneksi ke database
+include 'koneksi.php';
+global $conn;
+$mahasiswa = query("SELECT * FROM mahasiswa ");
 
 ?>
 <!DOCTYPE html>
@@ -42,14 +21,17 @@ if (isset($_POST['login'])) {
 
     <title>SI | TRANSKRIP NILAI</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template-->
+    <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
 
@@ -87,22 +69,22 @@ if (isset($_POST['login'])) {
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-school"></i>
+                    <i class="fas fa-fw fa-cog"></i>
                     <span>Data Akademik</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
+                <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="mahasiswa.php">Data Mahasiswa</a>
                         <a class="collapse-item" href="matakuliah.php">Data Matakuliah</a>
                     </div>
                 </div>
             </li>
 
-           <!-- Nav Item - Utilities Collapse Menu -->
-           <li class="nav-item">
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-book"></i>
+                    <i class="fas fa-fw fa-wrench"></i>
                     <span>Transkrip</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
@@ -123,6 +105,13 @@ if (isset($_POST['login'])) {
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <form class="form-inline">
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </form>
 
                     <!-- Topbar Search -->
                     <form
@@ -164,6 +153,7 @@ if (isset($_POST['login'])) {
                                 </form>
                             </div>
                         </li>
+
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -190,8 +180,8 @@ if (isset($_POST['login'])) {
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>  
+                                <a class="dropdown-item" href="Login.php" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
                             </div>
@@ -204,63 +194,65 @@ if (isset($_POST['login'])) {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                <h1 class="h3 mb-4 text-gray-800">Data Matakuliah</h1>
+                <br>
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Selamat Datang<strong><?php echo $_SESSION['level'];?></h1>
-                    <br>
-                    <div class = "row">
-                     <!-- Earnings (Monthly) Card Example -->
-                     <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Mahasiswa</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Data Mahasiswa</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-user fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <a href="Tmatakuliah.php">
+                            <button type="button" class="btn btn-primary">Tambah Data</button>
+                            </a>
                         </div>
-                         <!-- Earnings (Annual) Card Example -->
-                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Matakuliah</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Data Matakuliah</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Nilai</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Data Nilai</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-book fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                        <th>No.</th>         
+                                        <th>Nama</th>
+                                        <th>Nim</th>  
+                                        <th>TTL</th>
+                                        <th>Alamat</th>                            
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>                            
+                                        <th>No.</th>         
+                                        <th>Nama</th>
+                                        <th>Nim</th>  
+                                        <th>TTL</th>
+                                        <th>Alamat</th>                                       
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    <?php $i =1; ?>
+                          
+                          <?php foreach ($mahasiswa as $row ): ?>
+                              <td><?=$i; ?></td>  
+                              <td><?= $row["nama"]; ?></td>
+                              <td><?= $row["nim"]; ?></td>
+                              <td><?= $row["ttl"]; ?></td>
+                              <td><?= $row["alamat"]; ?></td>
+                             
+                           <td>
+                                <a href="Ematkul.php?id=<?=$row["id"]; ?> " type="button" class="btn btn-primary btn-sm">
+                                         <i class="fas fa-eye"></i>   
+                                        Detail </a>
+                                     <a href="Hmatkul.php?id=<?=$row["id"]; ?>" type="button" class="btn btn-danger btn-sm tombol-hapus"onclick="return confirm('yakin?');">
+                                         <i class="fas fa-trash"></i>   
+                                        Hapus</a>
+                                    </td>
+                              </tr>
+                              <?php $i ++; ?>
+                          <?php endforeach; ?>
+                                      
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <!-- /.container-fluid -->
 
@@ -271,7 +263,7 @@ if (isset($_POST['login'])) {
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; SI | NILAI</span>
+                        <span>Copyright &copy; Your Website 2020</span>
                     </div>
                 </div>
             </footer>
@@ -317,6 +309,13 @@ if (isset($_POST['login'])) {
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
 
 </body>
 

@@ -276,12 +276,12 @@ $matkul = query("SELECT * FROM matakuliah WHERE id = $id")[0];
 <?php
 if (isset($_POST['update'])) {
 	$id = $_POST ["id"];
-	$pengampu = $_POST["pengampu"];
     $nama_mkl = $_POST["nama_mkl"];	
 	$kode_mkl = $_POST["kode_mkl"];
+    $pengampu = $_POST["pengampu"];
 
 	// query insert data
-	mysqli_query($conn, "UPDATE matakuliah SET pengampu = '$pengampu', nama_mkl = '$nama_mkl', kode_mkl = '$kode_mkl' WHERE id = $id");
+	mysqli_query($conn, "UPDATE matakuliah SET nama_mkl = '$nama_mkl', kode_mkl = '$kode_mkl',pengampu = '$pengampu' WHERE id = $id");
 
     echo "
         <script>

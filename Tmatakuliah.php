@@ -2,14 +2,13 @@
 include "koneksi.php";
 
 if ( isset($_POST["submit"])){
-
-  
-    $namamkl = $_POST["nama_mkl"];
-    $nama = $_POST["pengampu"];
-    $kodemkl = $_POST["kode_mkl"];
+    
+    $nama_mkl = $_POST["nama_mkl"];
+    $kode_mkl = $_POST["kode_mkl"];
+    $pengampu = $_POST["pengampu"];
     $query = "INSERT INTO matakuliah
     VALUES 
-    ('','$nama','$namamkl','$kodemkl')
+    ('','$nama_mkl','$kode_mkl','$pengampu')
     ";
 mysqli_query($conn,$query);
  header("location:matakuliah.php");
