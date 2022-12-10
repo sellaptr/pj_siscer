@@ -1,12 +1,19 @@
 <?php
-// berfungsi mengaktifkan session
-session_start();
- 
-// berfungsi menghubungkan koneksi ke database
-include 'koneksi.php';
-global $conn;
-$mahasiswa = query("SELECT * FROM mahasiswa ");
+include "koneksi.php";
 
+if ( isset($_POST["submit"])){
+    
+    $nama = $_POST["nama"];
+    $nim = $_POST["nim"];
+    $ttl = $_POST["ttl"];
+    $alamat = $_POST["alamat"];
+    $query = "INSERT INTO mahasiswa
+    VALUES 
+    ('','$nama','$nim','$ttl','$alamat')
+    ";
+mysqli_query($conn,$query);
+ header("location:mahasiswa.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -192,76 +199,68 @@ $mahasiswa = query("SELECT * FROM mahasiswa ");
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                <h1 class="h3 mb-4 text-gray-800">Data Mahasiswa</h1>
-                <br>
+             <div class="row">
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <a href="Tmahasiswa.php">
-                            <button type="button" class="btn btn-primary">Tambah Data</button>
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                        <th>No.</th>         
-                                        <th>Nama</th>
-                                        <th>Nim</th>  
-                                        <th>TTL</th>
-                                        <th>Alamat</th>    
-                                        <th>Aksi</th>           
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>                            
-                                        <th>No.</th>         
-                                        <th>Nama</th>
-                                        <th>Nim</th>  
-                                        <th>TTL</th>
-                                        <th>Alamat</th>
-                                        <th>Aksi</th>                                       
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    <?php $i =1; ?>
-                          
-                          <?php foreach ($mahasiswa as $row ): ?>
-                              <td><?=$i; ?></td>  
-                              <td><?= $row["nama"]; ?></td>
-                              <td><?= $row["nim"]; ?></td>
-                              <td><?= $row["ttl"]; ?></td>
-                              <td><?= $row["alamat"]; ?></td>
-                             
-                           <td>
-                                <a href="inputnilai.php?id=<?=$row["id"]; ?> " type="button" class="btn btn-primary btn-sm">
-                                         <i class="fas fa-eye"></i>   
-                                        Input Nilai </a>
-                                     <a href="Hmatkul.php?id=<?=$row["id"]; ?>" type="button" class="btn btn-danger btn-sm tombol-hapus"onclick="return confirm('yakin?');">
-                                         <i class="fas fa-trash"></i>   
-                                        Hapus</a>
-                                    </td>
-                              </tr>
-                              <?php $i ++; ?>
-                          <?php endforeach; ?>
-                                      
-                                    </tbody>
-                                </table>
+                <div class="col">
+                            <h3>Mata Kuliah Dasar</h3>
+                            <div class="mb-4">
+                                <h6>Logika Algoritma</h6>
+                                <input type="number" class="form-control" placeholder="Masukkan Nilai..." autocomplete="off" required>
+                            </div>
+                            <div class="mb-4">
+                                <h6>Matematika Diskrit</h6>
+                                <input type="number" class="form-control" placeholder="Masukkan Nilai..." autocomplete="off" required>
                             </div>
                         </div>
-                    </div>
+                        <div class="col">
+                            <h3>Mata Kuliah Pendukung</h3>
+                            <div class="mb-3">
+                                <h6>Workshop Sistem Tertanam</h6>
+                                <input type="number" class="form-control" placeholder="Masukkan Nilai..." autocomplete="off" required>
+                            </div>
+                            <div class="mb-3">
+                                <h6>Workshop Pengolahan Citra Dan Vision</h6>
+                                <input type="number" class="form-control" placeholder="Masukkan Nilai..." autocomplete="off" required>
+                            </div>
+                        </div>
 
-                </div>
-                <!-- /.container-fluid -->
+                        <div class="col">
+                            <h3>Mata Kuliah Inti</h3>
+                            <div class="mb-3">
+                                <h6>Sistem Cerdas</h6>
+                                <input type="number" class="form-control" placeholder="Masukkan Nilai..." autocomplete="off" required>
+                            </div>
+                            <div class="mb-3">
+                                <h6>workshop Sistem Cerdas</h6>
+                                <input type="number" class="form-control" placeholder="Masukkan Nilai..." autocomplete="off" required>
+                            </div>
+                        </div>
 
-            </div>
-            <!-- End of Main Content -->
+                        <div class="col">
+                            <h3>Rencana Usulan Proposal</h3>
+                            <div class="mb-3">
+                                <h6>Latar Belakang</h6>
+                                <input type="number" class="form-control" placeholder="Masukkan Nilai..." autocomplete="off" required>
+                            </div>
+                            <div class="mb-3">
+                                <h6>State of The Art</h6>
+                                <input type="number" class="form-control" placeholder="Masukkan Nilai..." autocomplete="off" required>
+                            </div>  <div class="mb-3">
+                                <h6>Metode Penelitian</h6>
+                                <input type="number" class="form-control" placeholder="Masukkan Nilai..." autocomplete="off" required>
+                            </div>
+                            <div class="mb-3">
+                                <h6>Cara Analisis</h6>
+                                <input type="number" class="form-control" placeholder="Masukkan Nilai..." autocomplete="off" required>
+                            </div>
+                            <div class="mb-3">
+                                <h6>Daftar Pustaka</h6>
+                                <input type="number" class="form-control" placeholder="Masukkan Nilai..." autocomplete="off" required>
+                            </div>
+                        </div>
+                        </div>
 
-            <!-- Footer -->
+                      <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">

@@ -1,12 +1,19 @@
 <?php
-// berfungsi mengaktifkan session
-session_start();
- 
-// berfungsi menghubungkan koneksi ke database
-include 'koneksi.php';
-global $conn;
-$mahasiswa = query("SELECT * FROM mahasiswa ");
+include "koneksi.php";
 
+if ( isset($_POST["submit"])){
+    
+    $nama = $_POST["nama"];
+    $nim = $_POST["nim"];
+    $ttl = $_POST["ttl"];
+    $alamat = $_POST["alamat"];
+    $query = "INSERT INTO mahasiswa
+    VALUES 
+    ('','$nama','$nim','$ttl','$alamat')
+    ";
+mysqli_query($conn,$query);
+ header("location:mahasiswa.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -192,76 +199,32 @@ $mahasiswa = query("SELECT * FROM mahasiswa ");
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                <h1 class="h3 mb-4 text-gray-800">Data Mahasiswa</h1>
-                <br>
-
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <a href="Tmahasiswa.php">
-                            <button type="button" class="btn btn-primary">Tambah Data</button>
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                        <th>No.</th>         
-                                        <th>Nama</th>
-                                        <th>Nim</th>  
-                                        <th>TTL</th>
-                                        <th>Alamat</th>    
-                                        <th>Aksi</th>           
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>                            
-                                        <th>No.</th>         
-                                        <th>Nama</th>
-                                        <th>Nim</th>  
-                                        <th>TTL</th>
-                                        <th>Alamat</th>
-                                        <th>Aksi</th>                                       
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    <?php $i =1; ?>
-                          
-                          <?php foreach ($mahasiswa as $row ): ?>
-                              <td><?=$i; ?></td>  
-                              <td><?= $row["nama"]; ?></td>
-                              <td><?= $row["nim"]; ?></td>
-                              <td><?= $row["ttl"]; ?></td>
-                              <td><?= $row["alamat"]; ?></td>
-                             
-                           <td>
-                                <a href="inputnilai.php?id=<?=$row["id"]; ?> " type="button" class="btn btn-primary btn-sm">
-                                         <i class="fas fa-eye"></i>   
-                                        Input Nilai </a>
-                                     <a href="Hmatkul.php?id=<?=$row["id"]; ?>" type="button" class="btn btn-danger btn-sm tombol-hapus"onclick="return confirm('yakin?');">
-                                         <i class="fas fa-trash"></i>   
-                                        Hapus</a>
-                                    </td>
-                              </tr>
-                              <?php $i ++; ?>
-                          <?php endforeach; ?>
-                                      
-                                    </tbody>
-                                </table>
+                <div class="card-header">  
+                        <!-- <h5>Kandang A</h5> -->
+                        <div class="card col-md-7 mx-auto p-5">
+                    <div class="text-center">
+                    <form  class= "user"method="POST" action="" autocomplete="off" enctype="multipart/form-data">
+                                <h1 class="h4 text-gray-900 mb-4">Tambah Data Mahasiswa</h1>
                             </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user"  placeholder="Masukkan Nama Mahasiswa..." name="nama" required >
+                                </div>      
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" placeholder="Masukkan NIM..." name="nim" required >
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user"  placeholder="Masukkan TTL..." name="ttl"  required >
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user"  placeholder="Masukkan Alamat..." name="alamat"  required >
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-user btn-block" name="submit">
+                                  Tambah Data
+                                </button>
+                                </div>
+                            </div>
+                            </div>
+                      <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
